@@ -7,7 +7,7 @@ A Claude skill that checks in on your AI CI/CD competitors, customers, and the b
 ```bash
 git clone https://github.com/Jity01/competitor-monitor ~/.claude/skills/competitor-intel-digest
 cd ~/.claude/skills/competitor-intel-digest
-pip3 install resend
+pip3 install resend markdown
 cp env.example .env
 ```
 
