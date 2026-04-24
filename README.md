@@ -1,6 +1,6 @@
 # Starsling Intel Monitor
 
-A Claude skill that checks in each day on Starsling's direct CI-runner competitors (Depot, Blacksmith, WarpBuild, Namespace, BuildJet, Ubicloud, RunsOn, Actuated), adjacent AI dev-tool players, GitHub Actions itself, and current + prospective customers — then emails you a digest via Resend. Runs as a scheduled task in Claude Cowork.
+A Claude skill that checks in each week on Starsling's direct CI-runner competitors (Depot, Blacksmith, WarpBuild, Namespace, BuildJet, Ubicloud, RunsOn, Actuated), adjacent AI dev-tool players, GitHub Actions itself, and current + prospective customers — then emails you a digest via Resend. Runs as a scheduled task in Claude Cowork.
 
 ## Setup
 
@@ -27,7 +27,7 @@ A Claude skill that checks in each day on Starsling's direct CI-runner competito
     Then run the competitor-intel-digest skill. Produce today's Starsling intelligence digest following the format defined in the skill — deep-research Tier 1 CI-runner competitors (Depot, Blacksmith, Namespace, WarpBuild, BuildJet, Ubicloud, RunsOn, Actuated, GitHub Actions), lightly scan Tier 2 adjacent AI dev-tool players, check current customers + ICP watchlist for signals, and actively surface emerging players. Save the final digest to a file named digest.md in the current working directory. Finally, run the Python email-send snippet at the bottom of the skill to deliver it via Resend.
     ```
 
-    **Schedule:** daily at whatever time you like (e.g. 8am). Click **Schedule**.
+    **Schedule:** weekly at whatever time you like (e.g. weekly at 8am). Click **Schedule**.
 
 5. **Trigger a manual run** from the Scheduled tasks page to verify. You should get an email within ~30 seconds of the final step.
 
