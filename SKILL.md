@@ -1,89 +1,125 @@
 ---
 name: competitor-intel-digest
-description: Daily intelligence digest on the AI CI/CD space. Researches tracked competitors and customers via web search and fetch, spots emerging players, compiles a structured report, and emails it via the local send_email.py script.
+description: Daily intelligence digest for the founder of Starsling (AI-accelerated GitHub Actions runners + autonomous CI optimization agents). Researches direct CI-runner competitors and adjacent AI dev-tool players, scans for emerging entrants, compiles a structured report, and emails it via the local send_email.py script.
 ---
 
-# Competitor Intelligence Digest
+# Starsling Competitor Intelligence Digest
 
-You are an intelligence analyst producing a daily digest on the AI CI/CD space for a founder. Surface what matters — signal, not noise.
+You are an intelligence analyst producing a daily digest for the founder of **Starsling** (https://ci.starsling.dev). Surface what matters — signal, not noise.
 
-## Context
+## Product Context (so you can prioritize signals)
 
-The user operates in the **AI CI/CD space**: AI-powered continuous integration, intelligent testing, automated pipelines, AI devops tooling. They want to stay on top of:
+Starsling is an **AI-native GitHub Actions replacement**:
+- Faster runners on 5th Gen AMD EPYC (~30% faster than GitHub's hosted runners).
+- Transparent `actions/cache` drop-in, 4x faster and unlimited.
+- Usage-based pricing at `$0.008/min` (~33% cheaper than GitHub), no queue-time billing, unlimited concurrency.
+- **The novel wedge:** autonomous AI agents that analyze CI runs and submit PRs to fix caching issues, dependency install inefficiencies, test misconfigurations, and workflow structure problems.
+- Backed by Y Combinator. 50% YC discount first year. Enterprise tier with SSO/SAML.
+- Target stack: TypeScript (tsc), Python (pytest), Go (go vet), Rust (cargo), Ruby (rubocop); npm/pnpm/Turborepo; Vitest/Jest/Playwright/Cypress; oxlint/ESLint; Docker/Kubernetes/Terraform; Trivy.
+- Named customers so far: Better Auth, Mastra, OrgOrg — YC-flavored dev-infra startups.
 
-1. **Known competitors** — what they're shipping, saying, launching
-2. **Known customers** — growth signals, pivots, trouble, new needs
-3. **Emerging players** — new names making noise in the space
-4. **Space-level news** — trends, acquisitions, funding, product launches
+**What matters most to the founder, in rough priority order:**
+1. Pricing / performance moves from direct CI-runner competitors (Depot, Blacksmith, WarpBuild, Namespace, etc.) — especially claims on speed, caching, or per-minute price.
+2. GitHub / Microsoft changes to hosted runners or Actions pricing that could reset the baseline.
+3. Anyone else shipping AI-agent-submits-optimization-PR features — this is Starsling's unique angle; copycats or closer alternatives are urgent.
+4. Partnerships, funding, or YC-network moves among adjacent AI dev-tool players that could signal integration opportunities or competitive pressure.
+5. Signals from current customers (Better Auth, Mastra, OrgOrg) — expansion, churn risk, or their own product launches that imply more CI load.
 
 ## Tracked Entities
 
-This list is a **seed, not a ceiling.** Research these entities every run, but the Space Scan and Emerging Players steps are mandatory — do not cap yourself to this list. The operator can edit this section anytime, but doesn't have to; the skill works out of the box.
+This list is a **seed, not a ceiling.** Research these entities every run, but the Space Scan and Emerging Players steps are mandatory. Tier 1 gets deep daily research; Tier 2 gets a lighter scan for major news only.
 
-**Competitors — AI code review**
-- CodeRabbit — https://coderabbit.ai
-- Greptile — https://greptile.com
-- Graphite — https://graphite.dev
-- Qodo (formerly Codium AI) — https://qodo.ai
-- Cubic — https://cubic.dev
-- Codacy — https://codacy.com
+### Tier 1 — Direct competitors (deep daily research)
 
-**Competitors — AI test generation & QA**
-- Meticulous — https://meticulous.ai
-- Diffblue Cover — https://diffblue.com
-- TestSprite — https://testsprite.com
-- Momentic — https://momentic.ai
-- Tusk — https://usetusk.ai
-
-**Competitors — autonomous dev agents (CI/CD-adjacent)**
-- Sweep — https://sweep.dev
-- Cognition (Devin) — https://cognition.ai
-- GitHub Copilot coding agent — https://github.com/features/copilot
-
-**Competitors — AI-accelerated CI runners**
+**CI runners / GitHub Actions replacements:**
 - Depot — https://depot.dev
 - Blacksmith — https://blacksmith.sh
 - Namespace — https://namespace.so
 - WarpBuild — https://warpbuild.com
+- BuildJet — https://buildjet.com
+- Ubicloud — https://ubicloud.com
+- RunsOn — https://runs-on.com
+- Actuated — https://actuated.com
 
-**Customers — AI-forward engineering orgs (likely buyers of AI CI/CD tools).** Edit freely as the ICP sharpens.
-- Anthropic — https://anthropic.com
-- OpenAI — https://openai.com
-- Cursor / Anysphere — https://cursor.sh
-- Vercel — https://vercel.com
-- Linear — https://linear.app
-- Ramp — https://ramp.com
-- Notion — https://notion.so
+**The baseline they all compete against:**
+- GitHub Actions (hosted runners, pricing, `actions/cache`) — https://github.blog + https://github.com/features/actions
+- Watch for: hosted runner performance upgrades, pricing changes, new cache primitives, any GitHub-native "AI optimizes your workflow" announcement.
 
-**Space queries**
-- "AI CI/CD"
-- "AI devops"
-- "AI code review"
-- "AI test generation"
-- "autonomous coding agent"
-- "agentic devops"
-- "LLM code quality"
-- "intelligent CI pipeline"
+**AI CI optimization (closest to Starsling's wedge — highest alert):**
+- Sweep — https://sweep.dev
+- Trunk.io — https://trunk.io
+- Any new entrant claiming "AI agents that optimize your CI" — escalate to Top Signals immediately.
+
+### Tier 2 — Adjacent space (lighter scan for funding, acquisitions, major launches)
+
+These aren't head-to-head but shape the AI dev-tools market and could become integrations, acquirers, or pivot into the runner space.
+
+- **AI code review:** CodeRabbit (coderabbit.ai), Greptile (greptile.com), Graphite (graphite.dev), Qodo (qodo.ai), Cubic (cubic.dev)
+- **AI test gen / QA:** Meticulous (meticulous.ai), Diffblue (diffblue.com), TestSprite (testsprite.com), Momentic (momentic.ai), Tusk (usetusk.ai)
+- **Autonomous coding agents:** Cognition/Devin (cognition.ai), GitHub Copilot coding agent, Anysphere/Cursor (cursor.sh)
+
+### Customers — current + ICP watchlist
+
+Current named customers (watch for expansion signals, churn risk, product launches that imply more CI load):
+- Better Auth — https://better-auth.com
+- Mastra — https://mastra.ai
+- OrgOrg — (search for their current URL)
+
+ICP watchlist — YC / seed-to-Series-A dev-infra startups with heavy TS / monorepo / test-heavy CI:
+- Cal.com — https://cal.com
+- Resend — https://resend.com
+- Inngest — https://inngest.com
+- Trigger.dev — https://trigger.dev
+- Modal — https://modal.com
+- Neon — https://neon.tech
+- Railway — https://railway.app
+- Clerk — https://clerk.com
+- PostHog — https://posthog.com
+- Supabase — https://supabase.com
+
+### Space queries
+
+- "GitHub Actions alternative"
+- "faster CI runner"
+- "AI CI optimization"
+- "CI caching speedup"
+- "monorepo CI performance"
+- "self-hosted GitHub runner"
+- "Turborepo CI"
+- "AI devops agent"
+- "autonomous CI pipeline"
+- "YC CI/CD" (catches YC-backed entrants)
 
 ## Process
 
 Run these steps in order. Use `WebSearch` and `WebFetch`. Cap time — don't infinite-loop on any one entity.
 
-### 1. Known competitors
+### 1. Tier 1 competitors (deep research)
 
-For each competitor:
-- Fetch their blog / newsroom page; look for posts in the last 24 hours.
-- Fetch their homepage / product / pricing page; note any new feature or positioning changes.
-- Web search: `"<competitor name>" (last 24h)` — look for product launches, hiring, funding, strategic shifts.
+For each Tier 1 entity:
+- Fetch their blog / newsroom / changelog page — posts in the last 24 hours.
+- Fetch their homepage and pricing page — any speed claim, price change, or caching/perf announcement is a priority signal.
+- Web search: `"<name>" (last 24h)` for funding, hiring, partnerships, product launches.
+- **Special for GitHub Actions:** check github.blog and GitHub's changelog for runner / Actions / pricing changes.
+- **Special for Sweep / Trunk.io / any AI-CI-optimization play:** note any new "agent fixes your CI" framing — this is the one thing that lands in Top Signals no matter what.
 
-### 2. Known customers
+### 2. Tier 2 adjacent players (lighter scan)
 
-For each customer:
+For each Tier 2 entity, one pass only:
+- Quick web search for last-24h news.
+- Only surface: funding rounds, acquisitions, major product launches, anything explicitly involving CI/CD integration.
+- Do not do per-entity deep dives here — that's what Tier 1 is for.
+
+### 3. Customer signals
+
+For current customers (Better Auth, Mastra, OrgOrg):
 - Web search for recent news: funding, layoffs, acquisitions, product launches, leadership changes.
-- Fetch their blog/news page for anything suggesting changing direction or needs.
-- Classify each finding as **buying signal**, **churn risk**, or **neutral**.
+- Fetch their changelog / release notes — new features often imply heavier CI load (= expansion revenue for Starsling).
+- Classify as **expansion signal**, **churn risk**, or **neutral**.
 
-### 3. Scan the space (mandatory, not optional)
+For the ICP watchlist, one pass only — only surface if there's a notable event (funding, major launch, public complaint about CI/build times, hiring devex/infra engineers). A hiring post for "platform engineer to fix CI" is a high-value buying signal.
+
+### 4. Scan the space (mandatory, not optional)
 
 The tracked list is a starting point — this step is what keeps the digest from going stale as the space evolves.
 
@@ -92,13 +128,14 @@ The tracked list is a starting point — this step is what keeps the digest from
 - **Surface every new company name you encounter** that isn't on the tracked list. Note what they do and where you saw them — these go into the **Emerging Players** section of the report.
 - For each emerging player, recommend `add to tracking` / `monitor` / `ignore`. `add to tracking` means the operator should append them to the Tracked Entities list in this file.
 
-### 4. Synthesize
+### 5. Synthesize
 
 Before writing, think:
-- What's the single most important thing that happened?
-- What patterns show up across multiple sources?
-- What deserves a **pay attention** flag vs just **FYI**?
+- Anything that changes the runner-speed / runner-price leaderboard? → **Top Signal.**
+- Anyone new doing "AI agents that fix your CI"? → **Top Signal.**
+- GitHub shipping something that resets the baseline (hosted runner speed, cache limits, price cut)? → **Top Signal.**
 - What's genuinely new vs recycled?
+- What deserves a **pay attention** flag vs just **FYI**?
 
 **Ruthlessly filter.** If a category is empty, say so. Do not pad.
 
@@ -107,8 +144,8 @@ Before writing, think:
 Produce markdown in exactly this structure:
 
 ```
-# AI CI/CD Intelligence Digest
-**{Date}** — {one-line day summary, e.g. "Quiet day, one notable competitor launch"}
+# Starsling Intel Digest
+**{Date}** — {one-line day summary, e.g. "Quiet day, Blacksmith shipped a cache update"}
 
 ---
 
@@ -160,7 +197,7 @@ Produce markdown in exactly this structure:
 After producing the digest, deliver it by calling the local script. Run this exact bash command, pasting the full markdown report between the `EOF` markers:
 
 ```bash
-cd ~/.claude/skills/competitor-intel-digest && python3 send_email.py --subject "AI CI/CD Digest — $(date +%Y-%m-%d)" --body-file - <<'EOF'
+cd ~/.claude/skills/competitor-intel-digest && python3 send_email.py --subject "Starsling Intel Digest — $(date +%Y-%m-%d)" --body-file - <<'EOF'
 <paste the full markdown report here>
 EOF
 ```

@@ -1,6 +1,6 @@
-# Competitor Intelligence Monitor
+# Starsling Intel Monitor
 
-A Claude skill that checks in on your AI CI/CD competitors, customers, and the broader space each day, then emails you a tidy digest via Resend.
+A Claude skill that checks in each day on Starsling's direct CI-runner competitors (Depot, Blacksmith, WarpBuild, Namespace, BuildJet, Ubicloud, RunsOn, Actuated), adjacent AI dev-tool players, GitHub Actions itself, and current + prospective customers — then emails you a tidy digest via Resend.
 
 ## Setup (about 30 seconds)
 
@@ -28,7 +28,7 @@ echo "# hi" | python3 send_email.py --subject "test" --body-file -
 
 You should see `Sent to …` in your terminal and a test email in your inbox.
 
-Last thing: register `competitor-intel-digest` as a scheduled skill in Claude Desktop. That's it — `SKILL.md` ships with a researched seed list of AI CI/CD competitors and likely customers, and the skill is instructed to keep surfacing emerging players each run. You can edit the list in `SKILL.md` later if you want to tune it, but you don't have to.
+Last thing: register `competitor-intel-digest` as a scheduled skill in Claude Desktop. That's it — `SKILL.md` ships pre-tuned for Starsling: a tiered competitor list (Tier 1 = direct CI-runner competitors researched deeply; Tier 2 = adjacent AI dev-tool space scanned lightly), current customers, a YC dev-infra ICP watchlist, and priority rules that surface runner-speed/price changes and "AI fixes your CI" copycats as Top Signals. You can tune the list in `SKILL.md` anytime, but you don't have to.
 
 ## If something doesn't work
 
