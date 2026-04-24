@@ -6,7 +6,7 @@ A Claude skill that checks in each day on Starsling's direct CI-runner competito
 
 1. **Sign up for Resend** at [resend.com](https://resend.com) — remember which email you use; that's the only address the digest can go to. Create an API key at [resend.com/api-keys](https://resend.com/api-keys).
 
-2. **Upload the skill to Cowork.** Grab `competitor-intel-digest.zip` from this repo (it bundles `SKILL.md` in a `competitor-intel-digest/` folder). In Cowork, go to **Customize → Skills → Upload** and select the zip. The skill will now appear in your skills list.
+2. **Upload the skill to Cowork.** In Cowork's skills area, upload `SKILL.md` from this repo. The skill will now appear in your skills list as `competitor-intel-digest`.
 
 3. **Create a scheduled task.** In Cowork, click **+ New task** (top left) or type `/schedule`. Fill in:
 
@@ -39,13 +39,7 @@ Cowork's cloud sandbox can't reach local files on your Mac, so the skill has to 
 
 ## Tuning the skill
 
-`SKILL.md` ships pre-filled with a tiered competitor list (Tier 1 = direct CI runners, Tier 2 = adjacent AI dev-tool space), a current-customer list, and a YC dev-infra ICP watchlist. Edit whenever the picture changes, then rebuild the zip:
-
-```bash
-(cd /tmp && rm -rf skill-build && mkdir -p skill-build/competitor-intel-digest && cp ~/path/to/repo/SKILL.md skill-build/competitor-intel-digest/ && cd skill-build && zip -r ~/path/to/repo/competitor-intel-digest.zip competitor-intel-digest)
-```
-
-Re-upload the new zip in Cowork (it'll replace the old version). The scheduled task re-reads the skill on every run, so changes take effect immediately.
+`SKILL.md` ships pre-filled with a tiered competitor list (Tier 1 = direct CI runners, Tier 2 = adjacent AI dev-tool space), a current-customer list, and a YC dev-infra ICP watchlist. Edit whenever the picture changes and re-upload in Cowork (it replaces the old version). The scheduled task re-reads the skill on every run.
 
 ## If something doesn't work
 
