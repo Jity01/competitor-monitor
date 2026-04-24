@@ -18,24 +18,52 @@ The user operates in the **AI CI/CD space**: AI-powered continuous integration, 
 
 ## Tracked Entities
 
-Edit this section once during setup with the actual entities.
+This list is a **seed, not a ceiling.** Research these entities every run, but the Space Scan and Emerging Players steps are mandatory — do not cap yourself to this list. The operator can edit this section anytime, but doesn't have to; the skill works out of the box.
 
-**Competitors:**
-- `<Competitor 1>` — website: `<url>` — blog: `<url>`
-- `<Competitor 2>` — website: `<url>` — blog: `<url>`
-- `<Competitor 3>` — website: `<url>` — blog: `<url>`
+**Competitors — AI code review**
+- CodeRabbit — https://coderabbit.ai
+- Greptile — https://greptile.com
+- Graphite — https://graphite.dev
+- Qodo (formerly Codium AI) — https://qodo.ai
+- Cubic — https://cubic.dev
+- Codacy — https://codacy.com
 
-**Customers:**
-- `<Customer 1>` — website: `<url>`
-- `<Customer 2>` — website: `<url>`
+**Competitors — AI test generation & QA**
+- Meticulous — https://meticulous.ai
+- Diffblue Cover — https://diffblue.com
+- TestSprite — https://testsprite.com
+- Momentic — https://momentic.ai
+- Tusk — https://usetusk.ai
 
-**Space queries:**
+**Competitors — autonomous dev agents (CI/CD-adjacent)**
+- Sweep — https://sweep.dev
+- Cognition (Devin) — https://cognition.ai
+- GitHub Copilot coding agent — https://github.com/features/copilot
+
+**Competitors — AI-accelerated CI runners**
+- Depot — https://depot.dev
+- Blacksmith — https://blacksmith.sh
+- Namespace — https://namespace.so
+- WarpBuild — https://warpbuild.com
+
+**Customers — AI-forward engineering orgs (likely buyers of AI CI/CD tools).** Edit freely as the ICP sharpens.
+- Anthropic — https://anthropic.com
+- OpenAI — https://openai.com
+- Cursor / Anysphere — https://cursor.sh
+- Vercel — https://vercel.com
+- Linear — https://linear.app
+- Ramp — https://ramp.com
+- Notion — https://notion.so
+
+**Space queries**
 - "AI CI/CD"
 - "AI devops"
 - "AI code review"
-- "AI testing automation"
-- "intelligent pipelines"
-- "LLM code generation CI"
+- "AI test generation"
+- "autonomous coding agent"
+- "agentic devops"
+- "LLM code quality"
+- "intelligent CI pipeline"
 
 ## Process
 
@@ -55,11 +83,14 @@ For each customer:
 - Fetch their blog/news page for anything suggesting changing direction or needs.
 - Classify each finding as **buying signal**, **churn risk**, or **neutral**.
 
-### 3. Scan the space
+### 3. Scan the space (mandatory, not optional)
+
+The tracked list is a starting point — this step is what keeps the digest from going stale as the space evolves.
 
 - Run each space query for the last 24–48 hours.
 - Look for: new company launches, funding rounds, notable releases, thought leadership gaining traction, acquisitions.
-- **Flag emerging players** — any company name showing up that isn't on the tracked list.
+- **Surface every new company name you encounter** that isn't on the tracked list. Note what they do and where you saw them — these go into the **Emerging Players** section of the report.
+- For each emerging player, recommend `add to tracking` / `monitor` / `ignore`. `add to tracking` means the operator should append them to the Tracked Entities list in this file.
 
 ### 4. Synthesize
 

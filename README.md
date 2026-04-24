@@ -28,7 +28,7 @@ echo "# hi" | python3 send_email.py --subject "test" --body-file -
 
 You should see `Sent to …` in your terminal and a test email in your inbox.
 
-Last thing: open `SKILL.md`, swap the `<Competitor>` / `<Customer>` placeholders for your real list, and register `competitor-intel-digest` as a scheduled skill in Claude Desktop.
+Last thing: register `competitor-intel-digest` as a scheduled skill in Claude Desktop. That's it — `SKILL.md` ships with a researched seed list of AI CI/CD competitors and likely customers, and the skill is instructed to keep surfacing emerging players each run. You can edit the list in `SKILL.md` later if you want to tune it, but you don't have to.
 
 ## If something doesn't work
 
