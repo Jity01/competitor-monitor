@@ -1,56 +1,46 @@
 # Starsling Intel Monitor
 
-A Claude skill that checks in each day on Starsling's direct CI-runner competitors (Depot, Blacksmith, WarpBuild, Namespace, BuildJet, Ubicloud, RunsOn, Actuated), adjacent AI dev-tool players, GitHub Actions itself, and current + prospective customers — then emails you a tidy digest via Resend.
+A Claude skill that checks in each day on Starsling's direct CI-runner competitors (Depot, Blacksmith, WarpBuild, Namespace, BuildJet, Ubicloud, RunsOn, Actuated), adjacent AI dev-tool players, GitHub Actions itself, and current + prospective customers — then emails you a digest via Resend. Runs as a scheduled task in Claude Cowork.
 
-## Setup (about 30 seconds)
+## Setup
 
-```bash
-git clone https://github.com/Jity01/competitor-monitor ~/.claude/skills/competitor-intel-digest
-cd ~/.claude/skills/competitor-intel-digest
-pip3 install resend markdown
-cp env.example .env
-```
+1. **Sign up for Resend** at [resend.com](https://resend.com) — remember which email you use; that's the only address the digest can go to. Create an API key at resend.com/api-keys.
 
-Now open `.env` and fill in two lines:
+2. **In Claude Cowork**, create a new scheduled task using `SKILL.md` from this repo as the skill definition. Paste the following into the task fields:
 
-```
-RESEND_API_KEY=re_xxxxx       # grab one at resend.com/api-keys
-EMAIL_TO=you@example.com      # use the same email you signed up for Resend with
-```
+    **Name:**
+    ```
+    Starsling Intel Digest
+    ```
 
-That second line is the one gotcha worth knowing about: we send from Resend's built-in `onboarding@resend.dev` address so you don't have to bother verifying a domain. The tradeoff is that Resend's sandbox sender will only deliver to the email on your Resend account — so `EMAIL_TO` needs to be that same address. If you'd rather email someone else down the road, verify a domain at resend.com/domains and swap the `EMAIL_FROM` constant at the top of `send_email.py`.
+    **Prompt:** (swap in your real key + email)
+    ```
+    Before doing anything else, set these two environment variables for this session (use `export` in a bash step):
 
-Give it a quick test:
+      RESEND_API_KEY=re_xxxxxxxxxxxxxxxxxxxx
+      EMAIL_TO=you@example.com
 
-```bash
-echo "# hi" | python3 send_email.py --subject "test" --body-file -
-```
+    Then run the competitor-intel-digest skill. Produce today's Starsling intelligence digest following the format defined in the skill — deep-research Tier 1 CI-runner competitors (Depot, Blacksmith, Namespace, WarpBuild, BuildJet, Ubicloud, RunsOn, Actuated, GitHub Actions), lightly scan Tier 2 adjacent AI dev-tool players, check current customers + ICP watchlist for signals, and actively surface emerging players. Save the final digest to a file named digest.md in the current working directory. Finally, run the Python email-send snippet at the bottom of the skill to deliver it via Resend.
+    ```
 
-You should see `Sent to …` in your terminal and a test email in your inbox.
+3. **Pick a schedule** (daily at 8am is a good default) and save.
 
-Last thing: register `competitor-intel-digest` as a scheduled skill in Claude Desktop / Cowork. Paste these into the scheduled-task fields:
+4. **Trigger a manual run** to verify — you should get an email within ~30 seconds of the final step.
 
-**Name:** `Starsling Intel Digest`
+## The one gotcha
 
-**Prompt:**
+`EMAIL_TO` must exactly match the email you signed up for Resend with. The skill sends from Resend's built-in `onboarding@resend.dev` sandbox sender so you don't have to verify a domain — the tradeoff is that sandbox sender only delivers to the account owner. If you'd rather email someone else, verify a domain at resend.com/domains and change the `"from"` field inside SKILL.md's send snippet.
 
-```
-Before doing anything else, set these two environment variables for this session (use `export` in a bash step):
+## Why the API key is in the prompt
 
-  RESEND_API_KEY=re_xxxxxxxxxxxxxxxxxxxx
-  EMAIL_TO=you@example.com
+Cowork's cloud sandbox can't reach local files on your Mac, so the skill has to carry its own credentials. Anyone with access to the scheduled-task config can see the key — rotate it when you hand the tool to your friend, or move it into Cowork's secrets store if that feature is available in your workspace.
 
-Replace the placeholders above with the real key (from resend.com/api-keys) and the email registered with Resend.
+## Tuning the skill
 
-Then run the competitor-intel-digest skill. Produce today's Starsling intelligence digest following the format defined in the skill — deep-research Tier 1 CI-runner competitors (Depot, Blacksmith, Namespace, WarpBuild, BuildJet, Ubicloud, RunsOn, Actuated, GitHub Actions), lightly scan Tier 2 adjacent AI dev-tool players, check current customers + ICP watchlist for signals, and actively surface emerging players. Save the final digest to a file named digest.md in the current working directory. Finally, run the Python email-send snippet at the bottom of the skill to deliver it via Resend.
-```
-
-**Why the prompt has the key inline:** Cowork's scheduled-task sandbox can't reach your Mac's `~/.claude/skills/` directory or `.env` file (skill is uploaded as text only). The sandbox needs its own copy of the credentials. If Cowork later exposes a secrets feature, move the key there and drop it from the prompt.
-
-That's it — `SKILL.md` ships pre-tuned for Starsling: a tiered competitor list (Tier 1 = direct CI-runner competitors researched deeply; Tier 2 = adjacent AI dev-tool space scanned lightly), current customers, a YC dev-infra ICP watchlist, and priority rules that surface runner-speed/price changes and "AI fixes your CI" copycats as Top Signals. You can tune the list in `SKILL.md` anytime, but you don't have to.
+`SKILL.md` ships pre-filled with a tiered competitor list (Tier 1 = direct CI runners, Tier 2 = adjacent AI dev-tool space), a current-customer list, and a YC dev-infra ICP watchlist. Edit those sections whenever the picture changes — the scheduled task re-reads the skill on every run.
 
 ## If something doesn't work
 
-- **`You can only send testing emails to your own email address`** — `EMAIL_TO` doesn't match the email you used to sign up for Resend. Line them up and you're good.
-- **`command not found: python`** — use `python3` instead.
-- **The skill can't find `send_email.py`** — make sure you cloned into `~/.claude/skills/competitor-intel-digest` exactly; that's the path the skill uses.
+- **`You can only send testing emails to your own email address`** — `EMAIL_TO` doesn't match the email you used to sign up for Resend. Line them up.
+- **`HTTP 403 ... error code: 1010`** — Cloudflare bot-challenged the send. The skill sets a `User-Agent` header to avoid this; if it's still happening, something stripped the header.
+- **Digest was produced but no email arrived** — Claude may have skipped the final Python snippet. Check that `RESEND_API_KEY` and `EMAIL_TO` were exported before the snippet ran, and that the snippet printed a response with an `"id"` field.
