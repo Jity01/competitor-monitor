@@ -4,9 +4,11 @@ A Claude skill that checks in each day on Starsling's direct CI-runner competito
 
 ## Setup
 
-1. **Sign up for Resend** at [resend.com](https://resend.com) — remember which email you use; that's the only address the digest can go to. Create an API key at resend.com/api-keys.
+1. **Sign up for Resend** at [resend.com](https://resend.com) — remember which email you use; that's the only address the digest can go to. Create an API key at [resend.com/api-keys](https://resend.com/api-keys).
 
-2. **In Claude Cowork**, create a new scheduled task using `SKILL.md` from this repo as the skill definition. Paste the following into the task fields:
+2. **Upload the skill to Cowork.** Grab `competitor-intel-digest.zip` from this repo (it bundles `SKILL.md` in a `competitor-intel-digest/` folder). In Cowork, go to **Customize → Skills → Upload** and select the zip. The skill will now appear in your skills list.
+
+3. **Create a scheduled task.** In Cowork, click **+ New task** (top left) or type `/schedule`. Fill in:
 
     **Name:**
     ```
@@ -23,9 +25,9 @@ A Claude skill that checks in each day on Starsling's direct CI-runner competito
     Then run the competitor-intel-digest skill. Produce today's Starsling intelligence digest following the format defined in the skill — deep-research Tier 1 CI-runner competitors (Depot, Blacksmith, Namespace, WarpBuild, BuildJet, Ubicloud, RunsOn, Actuated, GitHub Actions), lightly scan Tier 2 adjacent AI dev-tool players, check current customers + ICP watchlist for signals, and actively surface emerging players. Save the final digest to a file named digest.md in the current working directory. Finally, run the Python email-send snippet at the bottom of the skill to deliver it via Resend.
     ```
 
-3. **Pick a schedule** (daily at 8am is a good default) and save.
+    **Schedule:** daily at whatever time you like (e.g. 8am). Click **Schedule**.
 
-4. **Trigger a manual run** to verify — you should get an email within ~30 seconds of the final step.
+4. **Trigger a manual run** from the Scheduled tasks page to verify. You should get an email within ~30 seconds of the final step.
 
 ## The one gotcha
 
@@ -37,7 +39,13 @@ Cowork's cloud sandbox can't reach local files on your Mac, so the skill has to 
 
 ## Tuning the skill
 
-`SKILL.md` ships pre-filled with a tiered competitor list (Tier 1 = direct CI runners, Tier 2 = adjacent AI dev-tool space), a current-customer list, and a YC dev-infra ICP watchlist. Edit those sections whenever the picture changes — the scheduled task re-reads the skill on every run.
+`SKILL.md` ships pre-filled with a tiered competitor list (Tier 1 = direct CI runners, Tier 2 = adjacent AI dev-tool space), a current-customer list, and a YC dev-infra ICP watchlist. Edit whenever the picture changes, then rebuild the zip:
+
+```bash
+(cd /tmp && rm -rf skill-build && mkdir -p skill-build/competitor-intel-digest && cp ~/path/to/repo/SKILL.md skill-build/competitor-intel-digest/ && cd skill-build && zip -r ~/path/to/repo/competitor-intel-digest.zip competitor-intel-digest)
+```
+
+Re-upload the new zip in Cowork (it'll replace the old version). The scheduled task re-reads the skill on every run, so changes take effect immediately.
 
 ## If something doesn't work
 
