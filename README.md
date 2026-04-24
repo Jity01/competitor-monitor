@@ -33,7 +33,7 @@ A Claude skill that checks in each day on Starsling's direct CI-runner competito
 
 ## Why the API key is in the prompt
 
-Cowork's cloud sandbox can't reach local files on your Mac, so the skill has to carry its own credentials. Anyone with access to the scheduled-task config can see the key — rotate it when you hand the tool to your friend, or move it into Cowork's secrets store if that feature is available in your workspace.
+Cowork's cloud sandbox can't reach local files on your Mac, so the skill has to carry its own credentials.
 
 ## Tuning the skill
 
