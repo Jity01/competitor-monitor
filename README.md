@@ -28,7 +28,13 @@ echo "# hi" | python3 send_email.py --subject "test" --body-file -
 
 You should see `Sent to …` in your terminal and a test email in your inbox.
 
-Last thing: register `competitor-intel-digest` as a scheduled skill in Claude Desktop. That's it — `SKILL.md` ships pre-tuned for Starsling: a tiered competitor list (Tier 1 = direct CI-runner competitors researched deeply; Tier 2 = adjacent AI dev-tool space scanned lightly), current customers, a YC dev-infra ICP watchlist, and priority rules that surface runner-speed/price changes and "AI fixes your CI" copycats as Top Signals. You can tune the list in `SKILL.md` anytime, but you don't have to.
+Last thing: register `competitor-intel-digest` as a scheduled skill in Claude Desktop. Paste these into the scheduled-task fields:
+
+**Name:** `Starsling Intel Digest`
+
+**Prompt:** `Run the competitor-intel-digest skill. Produce today's Starsling intelligence digest following the format defined in the skill — deep-research Tier 1 CI-runner competitors (Depot, Blacksmith, Namespace, WarpBuild, BuildJet, Ubicloud, RunsOn, Actuated, GitHub Actions), lightly scan Tier 2 adjacent AI dev-tool players, check current customers + ICP watchlist for signals, and actively surface emerging players. Then email the digest by running the send_email.py command at the bottom of the skill.`
+
+That's it — `SKILL.md` ships pre-tuned for Starsling: a tiered competitor list (Tier 1 = direct CI-runner competitors researched deeply; Tier 2 = adjacent AI dev-tool space scanned lightly), current customers, a YC dev-infra ICP watchlist, and priority rules that surface runner-speed/price changes and "AI fixes your CI" copycats as Top Signals. You can tune the list in `SKILL.md` anytime, but you don't have to.
 
 ## If something doesn't work
 
