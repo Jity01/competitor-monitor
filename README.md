@@ -28,11 +28,24 @@ echo "# hi" | python3 send_email.py --subject "test" --body-file -
 
 You should see `Sent to …` in your terminal and a test email in your inbox.
 
-Last thing: register `competitor-intel-digest` as a scheduled skill in Claude Desktop. Paste these into the scheduled-task fields:
+Last thing: register `competitor-intel-digest` as a scheduled skill in Claude Desktop / Cowork. Paste these into the scheduled-task fields:
 
 **Name:** `Starsling Intel Digest`
 
-**Prompt:** `Run the competitor-intel-digest skill. Produce today's Starsling intelligence digest following the format defined in the skill — deep-research Tier 1 CI-runner competitors (Depot, Blacksmith, Namespace, WarpBuild, BuildJet, Ubicloud, RunsOn, Actuated, GitHub Actions), lightly scan Tier 2 adjacent AI dev-tool players, check current customers + ICP watchlist for signals, and actively surface emerging players. Then email the digest by running the send_email.py command at the bottom of the skill.`
+**Prompt:**
+
+```
+Before doing anything else, set these two environment variables for this session (use `export` in a bash step):
+
+  RESEND_API_KEY=re_xxxxxxxxxxxxxxxxxxxx
+  EMAIL_TO=you@example.com
+
+Replace the placeholders above with the real key (from resend.com/api-keys) and the email registered with Resend.
+
+Then run the competitor-intel-digest skill. Produce today's Starsling intelligence digest following the format defined in the skill — deep-research Tier 1 CI-runner competitors (Depot, Blacksmith, Namespace, WarpBuild, BuildJet, Ubicloud, RunsOn, Actuated, GitHub Actions), lightly scan Tier 2 adjacent AI dev-tool players, check current customers + ICP watchlist for signals, and actively surface emerging players. Save the final digest to a file named digest.md in the current working directory. Finally, run the Python email-send snippet at the bottom of the skill to deliver it via Resend.
+```
+
+**Why the prompt has the key inline:** Cowork's scheduled-task sandbox can't reach your Mac's `~/.claude/skills/` directory or `.env` file (skill is uploaded as text only). The sandbox needs its own copy of the credentials. If Cowork later exposes a secrets feature, move the key there and drop it from the prompt.
 
 That's it — `SKILL.md` ships pre-tuned for Starsling: a tiered competitor list (Tier 1 = direct CI-runner competitors researched deeply; Tier 2 = adjacent AI dev-tool space scanned lightly), current customers, a YC dev-infra ICP watchlist, and priority rules that surface runner-speed/price changes and "AI fixes your CI" copycats as Top Signals. You can tune the list in `SKILL.md` anytime, but you don't have to.
 

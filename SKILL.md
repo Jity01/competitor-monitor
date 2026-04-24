@@ -194,15 +194,37 @@ Produce markdown in exactly this structure:
 
 ## Send the Report
 
-After producing the digest, deliver it by calling the local script. Run this exact bash command, pasting the full markdown report between the `EOF` markers:
+After producing the digest, save it to a file named `digest.md` in the current working directory. Then deliver it by running this exact Python snippet — it uses only the standard library, so no `pip install` is needed and it works in any sandbox:
 
 ```bash
-cd ~/.claude/skills/competitor-intel-digest && python3 send_email.py --subject "Starsling Intel Digest — $(date +%Y-%m-%d)" --body-file - <<'EOF'
-<paste the full markdown report here>
-EOF
+python3 <<'PYEOF'
+import os, json, urllib.request
+from datetime import date
+
+body = open("digest.md", encoding="utf-8").read()
+payload = json.dumps({
+    "from": "onboarding@resend.dev",
+    "to": [os.environ["EMAIL_TO"]],
+    "subject": f"Starsling Intel Digest — {date.today().isoformat()}",
+    "text": body,
+}).encode()
+
+req = urllib.request.Request(
+    "https://api.resend.com/emails",
+    data=payload,
+    headers={
+        "Authorization": f"Bearer {os.environ['RESEND_API_KEY']}",
+        "Content-Type": "application/json",
+        "User-Agent": "starsling-intel-digest/1.0",
+    },
+    method="POST",
+)
+with urllib.request.urlopen(req) as resp:
+    print(resp.read().decode())
+PYEOF
 ```
 
-Confirm the script printed a success line with a Resend email id. If it errored, surface the error and suggest the user check `.env` (`RESEND_API_KEY`, `EMAIL_TO`).
+`RESEND_API_KEY` and `EMAIL_TO` must be set in the environment before this runs (the scheduled-task prompt is responsible for that). Confirm the printed response includes an `"id"` field. If you see `"You can only send testing emails to your own email address"`, `EMAIL_TO` doesn't match the Resend account's signup email — surface that and stop. Any other error, print it verbatim.
 
 ## Rules
 
