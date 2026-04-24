@@ -194,18 +194,64 @@ Produce markdown in exactly this structure:
 
 ## Send the Report
 
-After producing the digest, save it to a file named `digest.md` in the current working directory. Then deliver it by running this exact Python snippet — it uses only the standard library, so no `pip install` is needed and it works in any sandbox:
+After producing the digest, save it to a file named `digest.md` in the current working directory. Then deliver it by running this exact Python snippet — it uses only the standard library (converts the markdown to styled HTML inline with `re`), so no `pip install` is needed and it works in any sandbox:
 
 ```bash
 python3 <<'PYEOF'
-import os, json, urllib.request
+import os, re, json, urllib.request
 from datetime import date
+
+BLOCK_TAG = re.compile(r'^<(h[1-6]|hr|ul|ol|p|div|blockquote|pre|table)\b')
+
+def md_to_html(md):
+    html = md.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+    html = re.sub(r'^---+\s*$', '\n\n<hr>\n\n', html, flags=re.MULTILINE)
+    for n in (4, 3, 2, 1):
+        html = re.sub(rf'^{"#" * n} (.+)$', rf'\n\n<h{n}>\1</h{n}>\n\n', html, flags=re.MULTILINE)
+    html = re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', html)
+    html = re.sub(r'\[([^\]]+)\]\(([^)]+)\)', r'<a href="\2">\1</a>', html)
+    html = re.sub(r'(?<![">=])(https?://[^\s<]+)', r'<a href="\1">\1</a>', html)
+    lines, out, depth = html.split('\n'), [], 0
+    for line in lines:
+        m_sub = re.match(r'^  - (.+)$', line)
+        m_top = re.match(r'^- (.+)$', line)
+        if m_sub:
+            if depth == 0: out.append('<ul>'); depth = 1
+            if depth == 1: out.append('<ul>'); depth = 2
+            out.append(f'<li>{m_sub.group(1)}</li>')
+        elif m_top:
+            while depth > 1: out.append('</ul>'); depth -= 1
+            if depth == 0: out.append('<ul>'); depth = 1
+            out.append(f'<li>{m_top.group(1)}</li>')
+        else:
+            while depth > 0: out.append('</ul>'); depth -= 1
+            out.append(line)
+    while depth > 0: out.append('</ul>'); depth -= 1
+    html = '\n'.join(out)
+    parts = []
+    for b in re.split(r'\n\n+', html):
+        b = b.strip()
+        if not b: continue
+        parts.append(b if BLOCK_TAG.match(b) else f'<p>{b}</p>')
+    body_html = '\n'.join(parts)
+    return f"""<!DOCTYPE html><html><head><style>
+body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; max-width: 720px; margin: 0 auto; padding: 24px; color: #1a1a1a; line-height: 1.55; }}
+h1 {{ font-size: 24px; border-bottom: 2px solid #000; padding-bottom: 8px; margin-bottom: 8px; }}
+h2 {{ font-size: 18px; margin-top: 32px; color: #111; }}
+h3 {{ font-size: 15px; margin: 18px 0 6px; color: #333; }}
+a  {{ color: #0066cc; text-decoration: none; }}
+ul {{ padding-left: 20px; margin: 8px 0; }}
+li {{ margin-bottom: 6px; }}
+hr {{ border: none; border-top: 1px solid #e5e5e5; margin: 24px 0; }}
+strong {{ color: #000; }}
+</style></head><body>{body_html}</body></html>"""
 
 body = open("digest.md", encoding="utf-8").read()
 payload = json.dumps({
     "from": "onboarding@resend.dev",
     "to": [os.environ["EMAIL_TO"]],
     "subject": f"Starsling Intel Digest — {date.today().isoformat()}",
+    "html": md_to_html(body),
     "text": body,
 }).encode()
 
