@@ -97,16 +97,16 @@ Run these steps in order. Use `WebSearch` and `WebFetch`. Cap time — don't inf
 ### 1. Tier 1 competitors (deep research)
 
 For each Tier 1 entity:
-- Fetch their blog / newsroom / changelog page — posts in the last 24 hours.
+- Fetch their blog / newsroom / changelog page — posts in the last 7 days.
 - Fetch their homepage and pricing page — any speed claim, price change, or caching/perf announcement is a priority signal.
-- Web search: `"<name>" (last 24h)` for funding, hiring, partnerships, product launches.
+- Web search: `"<name>" (last 7 days)` for funding, hiring, partnerships, product launches.
 - **Special for GitHub Actions:** check github.blog and GitHub's changelog for runner / Actions / pricing changes.
 - **Special for Sweep / Trunk.io / any AI-CI-optimization play:** note any new "agent fixes your CI" framing — this is the one thing that lands in Top Signals no matter what.
 
 ### 2. Tier 2 adjacent players (lighter scan)
 
 For each Tier 2 entity, one pass only:
-- Quick web search for last-24h news.
+- Quick web search for last-7-days news.
 - Only surface: funding rounds, acquisitions, major product launches, anything explicitly involving CI/CD integration.
 - Do not do per-entity deep dives here — that's what Tier 1 is for.
 
@@ -123,7 +123,7 @@ For the ICP watchlist, one pass only — only surface if there's a notable event
 
 The tracked list is a starting point — this step is what keeps the digest from going stale as the space evolves.
 
-- Run each space query for the last 24–48 hours.
+- Run each space query for the last 7 days.
 - Look for: new company launches, funding rounds, notable releases, thought leadership gaining traction, acquisitions.
 - **Surface every new company name you encounter** that isn't on the tracked list. Note what they do and where you saw them — these go into the **Emerging Players** section of the report.
 - For each emerging player, recommend `add to tracking` / `monitor` / `ignore`. `add to tracking` means the operator should append them to the Tracked Entities list in this file.
@@ -145,7 +145,7 @@ Produce markdown in exactly this structure:
 
 ```
 # Starsling Intel Digest
-**{Date}** — {one-line day summary, e.g. "Quiet day, Blacksmith shipped a cache update"}
+**{Date}** — {one-line summary of the past 7 days, e.g. "Mendral enters the AI-CI wedge; Mastra raises $22M"}
 
 ---
 
@@ -162,7 +162,7 @@ Produce markdown in exactly this structure:
   - Why it matters: {1 sentence}
   - Link: {URL}
 
-{Repeat for each. If no activity: "No notable activity in the last 24 hours."}
+{Repeat for each. If no activity: "No notable activity in the last 7 days."}
 
 ---
 
@@ -230,7 +230,7 @@ PYEOF
 
 - **Be real.** If a fetch failed, say so. Do not fabricate.
 - **No hedging.** This is an intelligence report — make calls. "This matters because…" not "this might possibly be…"
-- **Recency.** Only include content from the last 24 hours unless flagging a multi-day trend.
+- **Recency — strict 7-day window.** Include only items where the underlying event (launch, post, funding, hire, shutdown, price change) happened within the past 7 days. If a story is older than that but still appearing in search results, skip it — even if it shows up in today's coverage. The friend is reading this daily; anything you surfaced in a previous run should not show up again unless there's a genuinely new development this week. When in doubt about whether something is "new this week," err toward dropping it.
 - **Link everything.** Every claim needs a source URL.
 - **Emerging players is the differentiator.** Do not skip it.
 - **Brevity beats completeness.** Tight 1-page digest > sprawling 5-page one.
