@@ -126,10 +126,10 @@ Produce markdown in exactly this structure:
 
 ## Send the Report
 
-After producing the digest, deliver it by calling the local script. Run this exact bash command, replacing `<REPO_PATH>` with the path you used in setup (default: `~/competitor-monitor`) and pasting the full markdown report between the `EOF` markers:
+After producing the digest, deliver it by calling the local script. Run this exact bash command, pasting the full markdown report between the `EOF` markers:
 
 ```bash
-cd <REPO_PATH> && python3 send_email.py --subject "AI CI/CD Digest — $(date +%Y-%m-%d)" --body-file - <<'EOF'
+cd ~/.claude/skills/competitor-intel-digest && python3 send_email.py --subject "AI CI/CD Digest — $(date +%Y-%m-%d)" --body-file - <<'EOF'
 <paste the full markdown report here>
 EOF
 ```
